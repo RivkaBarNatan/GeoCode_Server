@@ -4,7 +4,6 @@ var app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./queries');
-// const Sequelize = require('sequelize');
 app.use(cors());
 
 
@@ -34,27 +33,6 @@ app.get('/GetGeocode', function (req, res) {
 // })
 
 
-
-
-
-// app.post('/post', async (req, res) => {
-
-//   try {
-  
-//   const data=req.body;
-  
-//   await newUser.save()
-  
-//   res.json({ data: data }) // Returns the new user that is created in the database
-  
-//   } catch(error) {
-  
-//   console.error(error)
-  
-//   }
-  
-//   })
-
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
@@ -62,8 +40,9 @@ app.use(
   })
 )
 
-app.get('/users', db.getget);
+app.get('/GetAll', db.getAll);
 app.post('/PostGeoCode', db.postGeoCode);
+app.get('/GetMostPopular', db.getMostPopular);
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!');
