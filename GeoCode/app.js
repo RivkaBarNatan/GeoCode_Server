@@ -63,7 +63,7 @@ app.use(
 )
 
 app.get('/users', db.getget);
-app.post('/PostGeoCode/:data', db.postGeoCode);
+app.post('/PostGeoCode', db.postGeoCode);
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!');

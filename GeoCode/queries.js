@@ -9,16 +9,19 @@ const client = new Client({
 });
 
 const postGeoCode = (req, res) => {
-    let data = req.params.data;
+    let data = req.body;
     console.log(data);
     client.query('INSERT INTO data VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', 
-    data.latitude, data.longitude, data.formattedaddress, data.country, data.city, data.state,
-     data.zipcode, data.streetname, data.countrycode, data.neighbourhood, data.provider
+[data.latitude, data.longitude, data.formattedaddress, data.country, data.city, data.state,
+     data.zipcode, data.streetname, data.countrycode, data.neighbourhood, data.provider]
      , (error, result) => {
         if (error) {
-            throw error
+            console.log('error:');
+            console.log(error);
+            throw error;
         }
-        res.status(201).send(`User added with ID: ${result.insertId}`);
+        console.log(`User added with ID: ${result}`)
+        res.status(201).send(`User added with ID: ${result}`);
     });
     console.log('Data insert successful');
     client.end();
