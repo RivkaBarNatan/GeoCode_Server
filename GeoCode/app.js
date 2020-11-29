@@ -43,6 +43,7 @@ app.use(
 app.get('/GetAll', db.getAll);
 app.post('/PostGeoCode', db.postGeoCode);
 app.get('/GetMostPopular', db.getMostPopular);
+app.get('/GetListPopular', db.getListPopular);
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!');

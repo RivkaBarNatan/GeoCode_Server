@@ -13,9 +13,9 @@ const client = new Client({
 const postGeoCode = (req, res) => {
     let data = req.body;
     console.log(data);
-    client.query('INSERT INTO data VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+    client.query('INSERT INTO data VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
         [data.latitude, data.longitude, data.formattedAddress, data.country, data.city, data.state,
-        data.zipcode, data.streetName, data.countryCode, data.neighbourhood, data.provider]
+        data.zipcode, data.streetName, data.streetNumber, data.countryCode, data.neighbourhood, data.provider]
         , (error, result) => {
             if (error) {
                 console.log('error:');
@@ -41,7 +41,7 @@ const getAll = (req, res) => {
 }
 
 const getMostPopular = (req, res) => {
-    client.query('SELECT COUNT(id), streetName FROM data GROUP BY latitude, longitude, streetName ORDER BY COUNT(id) DESC LIMIT 1;',
+    client.query('SELECT COUNT(id), streetName, streetNumber, city FROM data GROUP BY latitude, longitude, streetName, streetNumber, city ORDER BY COUNT(id) DESC LIMIT 1;',
      (error, result) => {
         if (error) {
             throw error;
@@ -49,8 +49,19 @@ const getMostPopular = (req, res) => {
         res.status(200).json(result.rows[0]);
     })
 }
+
+const getListPopular = (req, res) => {
+    client.query('SELECT COUNT(id), streetName, streetNumber, city FROM data GROUP BY latitude, longitude, streetName, streetNumber, city ORDER BY COUNT(id) DESC LIMIT 5;',
+     (error, result) => {
+        if (error) {
+            throw error;
+        }
+        res.status(200).json(result.rows);
+    })
+}
 module.exports = {
     getAll,
     postGeoCode,
-    getMostPopular
+    getMostPopular,
+    getListPopular
 }
